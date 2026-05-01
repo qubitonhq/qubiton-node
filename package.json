@@ -1,0 +1,63 @@
+{
+  "name": "@qubiton/sdk",
+  "version": "1.0.0",
+  "description": "Node.js SDK for the QubitOn API by QubitOn",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "api",
+    "validation",
+    "enrichment",
+    "sanctions",
+    "peppol",
+    "tax",
+    "iban",
+    "qubiton",
+    "QubitOn",
+    "kyc",
+    "kyb"
+  ],
+  "author": "QubitOn <support@qubiton.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qubitonhq/qubiton-node"
+  },
+  "homepage": "https://www.qubiton.com",
+  "devDependencies": {
+    "@types/node": "^20.19.39",
+    "tsup": "^8.3.5",
+    "typescript": "~5.7.0",
+    "vitest": "^2.1.8"
+  }
+}
