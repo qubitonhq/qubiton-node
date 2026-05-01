@@ -4,7 +4,7 @@
  * send on every request.
  */
 
-export const SDK_VERSION = '1.0.0';
+export const SDK_VERSION = '1.1.0';
 export const DEFAULT_BASE_URL = 'https://api.qubiton.com';
 export const USER_AGENT = `qubiton-node-sdk/${SDK_VERSION}`;
 

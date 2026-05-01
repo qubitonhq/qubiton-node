@@ -66,11 +66,47 @@ export interface Country {
   alternateCountry?: string;
 }
 
-/** A single check result attached to validation responses. */
-export interface ValidationResult {
+/**
+ * A single key/value enrichment item carried inside a `ValidationResult.additionalInfo`
+ * array. Mirrors the .NET `AppendInfo` record on the wire.
+ */
+export interface AppendInfo {
   key?: string;
   value?: string;
+  /** Some legacy responses also include a description alongside the key/value. */
   description?: string;
+}
+
+/**
+ * One entry in a response's `validationResults[]` array. Mirrors the .NET
+ * `ValidationResults` class on the wire — fields like `validationType`,
+ * `validationPass`, and `additionalInfo[]` describe the outcome of a single
+ * validation pass against the input.
+ *
+ * Note: this type was previously (incorrectly) shaped like an \`AppendInfo\`
+ * (`{ key, value, description }`), which never matched what the API actually
+ * returns. If you were reading `r.validationResults?.[0]?.key`, that was always
+ * `undefined`; the real key/value enrichment lives in `validationResults[i].additionalInfo[]`.
+ */
+export interface ValidationResult {
+  /** Score for this validation pass (e.g. 100 = success, 0 = fail). */
+  score?: number;
+  /** Source/provider-specific result code (e.g. USPS or postal-authority codes). */
+  validationResultCode?: string;
+  /** Original code from the upstream provider before normalization. */
+  sourceResultCode?: string;
+  /** Boolean outcome — `true` = passed, `false` = failed, `null` = inconclusive. */
+  validationPass?: boolean | null;
+  /** Human-readable description of the outcome. */
+  validationDescription?: string;
+  /** UTC timestamp when this validation ran (ISO 8601 string). */
+  validationDate?: string;
+  /** Type of validation (e.g. `"Address"`, `"Phone"`, `"Email"`, `"IpAddress"`). */
+  validationType?: string;
+  /** Optional sub-type for finer-grained classification. */
+  validationSubType?: string;
+  /** Provider-specific key/value enrichment (e.g. carrier, line type, domain age). */
+  additionalInfo?: AppendInfo[];
 }
 
 // ── Address Validation ────────────────────────────────────────────────────

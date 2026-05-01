@@ -42,6 +42,7 @@ export type {
   BaseResponse,
   Country,
   ValidationResult,
+  AppendInfo,
   // Address
   AddressRequest,
   AddressResponse,

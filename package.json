@@ -1,6 +1,6 @@
 {
   "name": "@qubiton/sdk",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Node.js SDK for the QubitOn API by QubitOn",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
