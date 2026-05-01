@@ -10,7 +10,10 @@ export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
   outDir: 'dist',
-  dts: true,
+  // .d.ts files are emitted by `tsc --emitDeclarationOnly` in the build
+  // script — not by tsup. tsup's DTS bundler silently injects `baseUrl`
+  // into the compiler options, which TypeScript 6.0+ flags as deprecated.
+  dts: false,
   sourcemap: true,
   clean: true,
   target: 'es2022',

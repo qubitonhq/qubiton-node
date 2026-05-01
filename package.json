@@ -27,7 +27,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && npm run build:types",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationMap && cp dist/index.d.ts dist/index.d.cts && cp dist/index.d.ts.map dist/index.d.cts.map",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
