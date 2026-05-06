@@ -1103,9 +1103,18 @@ export interface CreditAnalysisResponse extends BaseResponse {
 
 // ── ESG Score ─────────────────────────────────────────────────────────────
 
+/**
+ * Request shape for `lookupESGScore`. The body sent on the wire contains only
+ * `companyName` and `esgId` (plus `BaseRequest` fields). `country` and `domain`
+ * are bound on the server as `[FromQuery]` parameters on `ESGController` —
+ * the SDK strips them out of the body and serialises them into the URL
+ * query string. Sending them in the body would silently no-op.
+ */
 export interface EsgScoresRequest extends BaseRequest {
   companyName: string;
+  /** Sent as URL query parameter `?country=…`, NOT body. ISO 3166-1 alpha-2/3 or full name. */
   country?: string;
+  /** Sent as URL query parameter `&domain=…`, NOT body. e.g. "example.com". */
   domain?: string;
   esgId?: string;
 }

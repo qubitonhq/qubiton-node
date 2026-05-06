@@ -633,7 +633,16 @@ export class QubitOnClient {
 
   /** ESG scores. Returns a JSON array of `EsgScoresResponseEntry`. */
   async lookupESGScore(req: EsgScoresRequest, options?: RequestOptions): Promise<EsgScoresResponse> {
-    return this.post<EsgScoresResponse>('/api/esg/Scores', req, options);
+    // `country` and `domain` are bound on the server as [FromQuery] (not body).
+    // Strip them out of the body and serialise into the URL with safe encoding.
+    // The body keeps only companyName, esgId, and BaseRequest fields.
+    const { country, domain, ...body } = req;
+    const params = new URLSearchParams();
+    if (country) params.set('country', country);
+    if (domain) params.set('domain', domain);
+    const qs = params.toString();
+    const path = qs ? `/api/esg/Scores?${qs}` : '/api/esg/Scores';
+    return this.post<EsgScoresResponse>(path, body, options);
   }
 
   async domainSecurityReport(
